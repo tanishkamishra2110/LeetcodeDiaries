@@ -16,7 +16,9 @@ public:
             return 0;
         }
         int l = height(root->left);
+        //cout<<"L"<<l;
           int r = height(root->right);
+         // cout<<"R"<<r;
         
 
           return max(l,r)+1;}
