@@ -29,6 +29,11 @@ int height(TreeNode* root){
         if(root==NULL){
             return true;
         }
+        //basically dono side ki height should differ by not more than one
+        //eachnode ka left subtree nikalo
+        //fir right nikalo 
+        //then check their height difference
+        //then check if everything is in limits && and krke
         int lh = height(root->left);
         int rh = height(root->right);
         int d = abs(lh-rh);
