@@ -1,39 +1,47 @@
 class Solution {
 public:
     string reorganizeString(string s) {
-       int arr[26] = {0};
-        for (int i = 0; i < s.size(); i++) {
-            arr[s[i] - 'a']++;
+        unordered_map<char,int>mp;
+        for(int i=0;i<s.size();i++){
+            mp[s[i]]++;
         }
-        // step 2
-        char max_freq_char;
-        int max_freq = INT_MIN;
-        for (int i = 0; i < 26; i++) {
-            if (arr[i] > max_freq) {
-                max_freq = arr[i];
-                max_freq_char = i + 'a';
+        int mf=INT_MIN;
+        char mfc;
+        for(auto it:mp){
+            auto temp=it.second;
+            if(temp>mf){
+                mf=temp;
+                auto x = it.first;
+                mfc=x;
+                
             }
+            cout<<mfc<<": "<<mf<<endl;
         }
-        // step 3
-        int index = 0;
-        while (index < s.size() && max_freq > 0) {
-            s[index] = max_freq_char;
-            max_freq--;
-            index += 2;
+        int i=0;
+        while(mf>0&&i<s.size()){
+            s[i]=mfc;
+            mf--;
+            i+=2;
         }
-        if (max_freq != 0) {
+        cout<<s;
+
+        if(mf!=0){
             return "";
         }
-        arr[max_freq_char - 'a'] = 0;
-        // step 4
-        for (int i = 0; i < 26; i++) {
-            while (arr[i] > 0) {
-                index = (index >= s.size()) ? 1 : index;
-                s[index] = i + 'a';
-                arr[i]--;
-                index += 2;
-            }
+       mp.erase(mfc);
+       for(auto it:mp){
+        auto f = it.second;
+        auto uu = it.first;
+        cout<<f<<endl;
+        while(f>0){
+            i = (i>=s.size()) ? 1:i;
+
+            s[i]=uu;
+            cout<<s[i]<<endl;
+            i+=2;
+            f--;
         }
-        return s;
+       }
+       return s;
     }
 };
