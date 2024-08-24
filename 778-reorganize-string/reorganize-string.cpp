@@ -1,47 +1,49 @@
 class Solution {
 public:
     string reorganizeString(string s) {
-        unordered_map<char,int>mp;
-        for(int i=0;i<s.size();i++){
-            mp[s[i]]++;
+        priority_queue<pair<int,char>> pq;
+        unordered_map<char, int> m;
+        string ans = "";
+        for (auto x:s) {
+            m[x]++;
         }
-        int mf=INT_MIN;
-        char mfc;
-        for(auto it:mp){
-            auto temp=it.second;
-            if(temp>mf){
-                mf=temp;
-                auto x = it.first;
-                mfc=x;
-                
-            }
-            cout<<mfc<<": "<<mf<<endl;
-        }
-        int i=0;
-        while(mf>0&&i<s.size()){
-            s[i]=mfc;
-            mf--;
-            i+=2;
-        }
-        cout<<s;
-
-        if(mf!=0){
+        for (auto x : m) {
+            char ch = x.first;
+            int c = x.second;
+            pq.push({c,ch});}
+            // string ans="";
+             if((pq.top().first)>ceil(s.size()/2.0))
+        {
             return "";
         }
-       mp.erase(mfc);
-       for(auto it:mp){
-        auto f = it.second;
-        auto uu = it.first;
-        cout<<f<<endl;
-        while(f>0){
-            i = (i>=s.size()) ? 1:i;
+            while(pq.size()>1){
+                auto temp = pq.top();
+                pq.pop();
+                auto temp2 = pq.top();
+                pq.pop();
+                // char a = temp.first;
+                
+                // char b = temp2.first;
+                ans+=temp.second;
+                ans+=temp2.second;
+                temp.first--;
+                temp2.first--;
+                if(temp.first>0){
+                    pq.push(temp);
+                }
+                 if(temp2.first>0){
+                    pq.push(temp2);
+                }
+            }
+            if(pq.size()>0)
+        {
+            auto last = pq.top();
 
-            s[i]=uu;
-            cout<<s[i]<<endl;
-            i+=2;
-            f--;
+            ans+=last.second;
         }
-       }
-       return s;
+
+        return ans;
+
+
     }
 };
